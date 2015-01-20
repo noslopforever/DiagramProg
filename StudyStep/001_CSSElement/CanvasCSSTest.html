@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="./CanvasCSS.css" type="text/css">
+    <script>
+    </script>
+</head>
+<body>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script>
+        // Fallback to loading jQuery from a local path if the CDN is unavailable
+        (window.jQuery || document.write('<script src="/scripts/jquery-1.9.0.min.js"><\/script>'));
+    </script>
+    <script>
+        function domReady() {
+            $('dcomment').mousedown(showMessage);
+            $('dcomment').mouseup(hideMessage);
+        }
+
+        function showMessage() {
+            $('#message').fadeIn('slow');
+        }
+        function hideMessage() {
+            $('#message').fadeOut('slow');
+        }
+
+        $(domReady);
+    </script>
+    <div id="message" style="display:none">
+        <h1>Hello from jQuery!</h1>
+    </div>
+    <div id="container">
+        <dcomment id="comment_1" class="commentgroup_c" style="
+            left: 50px;
+            top: 50px;
+            width: 400px;
+            height: 400px;
+            ">
+            <!-- width = p.w - border.w/2 ... wtf? -->
+            <dcommenttitlebar class="commenttitle_c" style="
+                              width: 398px;
+                              ">
+                <dcommenttitle>Comment</dcommenttitle>
+            </dcommenttitlebar>
+        </dcomment>
+        <dnode id="state_1" class="commonstate_c" style="
+                 left:100px;
+                 top:100px;
+                 ">
+        </dnode>
+        <dnode id="state_2" class="commonstate_c" style="
+                 left:200px;
+                 top:200px;
+                 ">
+        </dnode>
+        <dlink id="link_1" class="commonlink_c" style="">
+        </dlink>
+    </div>
+</body>
+</html>
