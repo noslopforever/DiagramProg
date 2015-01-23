@@ -1,16 +1,34 @@
 ﻿
 
 interface IElement {
+	// X position
     X?: number;
+	// Y position
     Y?: number;
+	// Width
     Width?: number;
+	// Height
     Height?: number;
 }
 
 interface IComment extends IElement {
-    CommentHeader?: string;
+	// comment brief
+    CommentTitle?: string;
+	// comment detail
     CommentDetail?: string;
 }
+
+interface MethodParam {
+    Name: string;
+    Type: string;
+	Desc?: string;
+};
+interface Method {
+    Name: string;
+    Inputs: MethodParam[];
+    Outputs: MethodParam[];
+	Desc?: string;
+};
 
 
 
@@ -24,33 +42,20 @@ class DElement
     StyleClass: string;
     JsonObject: Object;
 
-    // JSON
-    //X: number;
-    //Y: number;
-    //Z: number;
-
     constructor(InParentElement: HTMLElement, InJsonObject: Object) {
         this.ParentElement = InParentElement;
         this.HtmlElement = this.createElement();
         this.ParentElement.appendChild(this.HtmlElement);
         this.JsonObject = InJsonObject;
         this.flush();
-        //this.element.innerHTML += "The time is: ";
-        //this.span = document.createElement('span');
-        //this.element.appendChild(this.span);
-        //this.span.innerText = new Date().toUTCString();
     }
 
     start()
     {
-        //this.timerToken = setInterval(() =>
-        //this.span.innerHTML = new Date().toUTCString()
-        //, 500);
     }
 
     stop()
     {
-        //clearTimeout(this.timerToken);
     }
 
     createElement(): HTMLElement {
@@ -58,6 +63,10 @@ class DElement
     }
 
     flush() {
+        this.HtmlElement.style.left = this.JsonObject["X"].toString() + "px";
+        this.HtmlElement.style.top = this.JsonObject["Y"].toString() + "px";
+        this.HtmlElement.style.width = this.JsonObject["Width"].toString() + "px";
+        this.HtmlElement.style.height = this.JsonObject["Height"].toString() + "px";
     }
 
 }
@@ -70,40 +79,37 @@ class DElement
 // comment node
 // 
 class DComment extends DElement {
-    // JSON
-    //CommentHeader: string;
-    //CommentDetail: string;
-    //Width: number;
-    //Height: number;
-
     constructor(InParentElement: HTMLElement, InJsonObject: Object) {
         super(InParentElement, InJsonObject);
     }
 
+	TitleElement:HTMLElement;
+	TitleBarElement:HTMLElement;
+
     createElement(): HTMLElement {
         var element = document.createElement('dcomment');
+
+		// create inner elements - titlebar and title
+		this.TitleBarElement = document.createElement('dcommenttitlebar');
+        element.appendChild(this.TitleBarElement);
+
+		this.TitleElement = document.createElement('dcommenttitle');
+        this.TitleBarElement.appendChild(this.TitleElement);
+
         return element;
     }
 
     flush() {
-        this.HtmlElement.style.left = this.JsonObject["X"].toString() + "px";
-        this.HtmlElement.style.top = this.JsonObject["Y"].toString() + "px";
-        this.HtmlElement.style.width = this.JsonObject["Width"].toString() + "px";
-        this.HtmlElement.style.height = this.JsonObject["Height"].toString() + "px";
+		// dcommenttitlebar's width = dcomment's width - dcomment's border
+		// ?
+		this.TitleBarElement.style.Width = (this.JsonObject["Width"] - 2).toString() + "px";
+		// comment title
+		this.TitleElement.textContent = this.JsonObject["CommentTitle"];
     }
 
 };
 
 
-class MethodParam {
-    Name: string;
-    Type: string;
-};
-class Method {
-    Name: string;
-    Inputs: MethodParam[];
-    Outputs: MethodParam[];
-};
 
 //
 // State Node
@@ -116,7 +122,7 @@ class DState extends DElement {
     }
 
     createElement(): HTMLElement {
-        return document.createElement('dcomment');
+        return document.createElement('dstate');
     }
 };
 
@@ -137,17 +143,25 @@ class DLink extends DElement {
 window.onload =
 () => {
     var container = document.getElementById('container');
-    var json = {
+    var jsonComment = {
         X: 50,
         Y: 50,
         Width: 300,
         Height: 300,
-        CommentHeader: "Comment Header",
+        CommentTitle: "Comment Header",
         CommentDetail: "Comment Details"
     };
-    var comment = new DComment(container, json);
-    //var state1 = new DState(container);
-    //var state2 = new DState(container);
-    //comment.flush();
-    //comment.HtmlElement.style = ;
+	var jsonState1 = {
+		X: 100,
+		Y: 100,
+	};
+ 	var jsonState2 = {
+		X: 200,
+		Y: 200,
+	};
+
+	// generate nodes
+    var comment = new DComment(container, jsonComment);
+    var state1 = new DState(container, jsonState1);
+    var state2 = new DState(container, jsonState2);
 };
