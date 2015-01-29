@@ -22,13 +22,16 @@
     <Content Include="CanvasCSS.css" />
     <Content Include="CanvasCSSTest.html" />
     <Content Include="CanvasTS\CanvasTS.css" />
-    <Content Include="CanvasTS\CanvasTSTest.html" />
+    <Content Include="CanvasTS\CanvasTS.html" />
+    <Content Include="CanvasTS\CanvasTS.ts" />
+    <Content Include="CssTS\CssTS.css" />
+    <Content Include="CssTS\CssTSTest.html" />
     <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="CanvasTS\CanvasTS.ts" />
+    <TypeScriptCompile Include="CssTS\CssTS.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
@@ -37,6 +40,14 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
